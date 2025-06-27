@@ -25,7 +25,7 @@ Node *insertStart(int x, Node *head)
 
 // https : // www.geeksforgeeks.org/problems/linked-list-insertion-1587115620/1
 
-Node* insertEnd(int x, Node *head)
+Node *insertEnd(int x, Node *head)
 {
     Node *temp = new Node(x);
     temp->next = nullptr;
@@ -75,13 +75,46 @@ Node *insertAtPosition(int x, int pos, Node *head)
     return head;
 }
 
+Node *deleteBegin(Node *head)
+{
+    if (head == NULL)
+        return NULL;
+
+    Node *temp = head;
+    temp = temp->next;
+    delete (head);
+    return temp;
+}
+
+Node *deleteFromEnd(Node *head)
+
+{
+    if (head == NULL)
+        return NULL;
+    if (head->next == NULL)
+    {
+        delete (head);
+        return NULL;
+    }
+
+    Node *temp = head;
+    while (temp->next->next != NULL) // Thsi stops at the last second position
+    {
+        temp = temp->next;
+    }
+
+    Node *curr = temp->next;
+    delete (curr);
+    temp->next = NULL;   // This step is very important because, if this is not there then it will give me segmentation falut, as the temp->next will be assigned to nothing.
+    return head;
+}
+
 int main()
 {
     Node *head = nullptr;
-    Node* root = nullptr;
+    Node *root = nullptr;
 
     // Insert at the start
-   
 
     root = insertStart(5, root);
     root = insertStart(15, root);
@@ -90,12 +123,15 @@ int main()
     // Insert at the end
     root = insertEnd(45, root);
     root = insertEnd(55, root);
-   
 
     // // Insert at position 2
 
     root = insertAtPosition(25, 2, root);
+// Delete from the beginning
+    root = deleteBegin(root);
 
+    // Delete from the end
+    root = deleteFromEnd(root);
 
     // Print the linked list
     Node *current = root;
